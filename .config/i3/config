@@ -1,0 +1,194 @@
+##### General #####
+
+font pango:Hack 10
+floating_modifier $mod
+
+##### Constants #####
+
+# keys
+set $mod    Mod4
+
+# colours
+set $bg     #4422aa
+set $bg-f   #aa2277
+set $bg-u   #cc1133
+set $text   #cc4499
+set $text-f #ee66bb
+set $text-u #000000
+
+# applications
+set $term       termite
+set $browser    qutebrowser
+
+# workspaces
+set $ws1    "  1 "
+set $ws2    "  2 "
+set $ws3    "  3 "
+set $ws4    "  4 "
+set $ws5    "  5 "
+set $ws6    "  6 "
+set $ws7    "  7 "
+set $ws8    "  8 "
+set $ws9    "  9 "
+
+##### Key Bindings #####
+
+bindsym $mod+Return             exec $term
+#bindsym $mod+Control+Return
+
+bindsym $mod+space              focus mode_toggle
+bindsym $mod+Control+space      floating toggle
+
+bindsym $mod+a                  focus parent
+bindsym $mod+Control+a          focus child
+
+bindsym $mod+b                  exec $browser
+# bindsym $mod+Control+b
+
+bindsym $mod+c                  focus left
+bindsym $mod+Control+c          move left
+bindsym $mod+Shift+c            resize shrink width 5 px or 5 ppt
+
+bindsym $mod+d                  exec rofi -show run
+#bindsym $mod+Control+d
+
+#bindsym $mod+e
+#bindsym $mod+Control+e
+
+bindsym $mod+f                  fullscreen toggle
+#bindsym $mod+Control+f
+
+#bindsym $mod+g
+#bindsym $mod+Control+g
+
+bindsym $mod+h                  split h
+#bindsym $mod+Control+h
+
+#bindsym $mod+i
+#bindsym $mod+Control+i
+
+#bindsym $mod+j
+#bindsym $mod+Control+j
+
+#bindsym $mod+k
+#bindsym $mod+Control+k
+
+bindsym $mod+l                  reload
+bindsym $mod+Control+l          restart
+
+bindsym $mod+m                  [instance="math"] scratchpad show; [instance="math"] move position center
+bindsym $mod+Control+m          [instance="math"] kill; exec --no-startup-id st -f Hack:pixelsize=32 -n math -e R -q
+
+#bindsym $mod+n
+#bindsym $mod+Control+n
+
+#bindsym $mod+o
+#bindsym $mod+Control+o
+
+#bindsym $mod+p
+#bindsym $mod+Control+p
+
+#bindsym $mod+q
+bindsym $mod+Control+q          kill
+
+bindsym $mod+r                  focus right
+bindsym $mod+Control+r          move right
+bindsym $mod+Shift+r            resize grow width 5 px or 5 ppt
+
+bindsym $mod+s                  focus up
+bindsym $mod+Control+s          move up
+bindsym $mod+Shift+s            resize shrink height 5 px or 5 ppt
+
+bindsym $mod+t                  focus down
+bindsym $mod+Control+t          move down
+bindsym $mod+Shift+t            resize grow height 5 px or 5 ppt
+
+#bindsym $mod+u
+#bindsym $mod+Control+u
+
+bindsym $mod+v                  split v
+#bindsym $mod+Control+v
+
+#bindsym $mod+w
+#bindsym $mod+Control+w
+
+#bindsym $mod+x
+#bindsym $mod+Control+x
+
+#bindsym $mod+y
+#bindsym $mod+Control+y
+
+#bindsym $mod+z
+#bindsym $mod+Control+z
+
+#bindsym $mod+0
+#bindsym $mod+Control+0
+
+bindsym $mod+1                  workspace $ws1
+bindsym $mod+Shift+1            move container to workspace $ws1
+
+bindsym $mod+2                  workspace $ws2
+bindsym $mod+Shift+2            move container to workspace $ws2
+
+bindsym $mod+3                  workspace $ws3
+bindsym $mod+Shift+3            move container to workspace $ws3
+
+bindsym $mod+4                  workspace $ws4
+bindsym $mod+Shift+4            move container to workspace $ws4
+
+bindsym $mod+5                  workspace $ws5
+bindsym $mod+Shift+5            move container to workspace $ws5
+
+bindsym $mod+6                  workspace $ws6
+bindsym $mod+Shift+6            move container to workspace $ws6
+
+bindsym $mod+7                  workspace $ws7
+bindsym $mod+Shift+7            move container to workspace $ws7
+
+bindsym $mod+8                  workspace $ws8
+bindsym $mod+Shift+8            move container to workspace $ws8
+
+bindsym $mod+9                  workspace $ws9
+bindsym $mod+Shift+9            move container to workspace $ws9
+
+##### Bar #####
+
+bar {
+    status_command i3blocks -c ~/.config/i3blocks.conf
+
+    colors {
+        background          $bg
+        statusline          $text
+        separator           $text
+
+        #                   border  background  text
+        focused_workspace   $bg-f   $bg-f       $text-f
+        active_workspace    $bg     $bg         $text
+        inactive_workspace  $bg     $bg         $text
+        urgent_workspace    $bg-u   $bg-u       $text-u
+    }
+}
+
+##### Startup #####
+
+# colours               border  background  text    indicator   $child border
+client.focused          $bg-f   $bg-f       $text   $text-u     $bg-f
+client.unfocused        $bg     $bg         $text   $text-u     $bg
+client.urgent           $bg-u   $bg-u       $text-u $text-u     $bg-u
+
+# gaps
+for_window [class="^.*"] border pixel 3
+gaps inner 40
+
+# defaults
+for_window [instance="math"]    floating enable
+for_window [instance="math"]    resize set 900 400
+for_window [instance="math"]    move scratchpad
+
+# applications
+exec --no-startup-id st -f Hack:pixelsize=32 -n math -e R -q
+exec --no-startup-id compton
+exec --no-startup-id redshift
+
+# wallpaper
+exec_always --no-startup-id feh --bg-fill ~/.config/images/wallpaper.png
